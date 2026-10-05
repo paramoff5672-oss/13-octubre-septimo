@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Siete meses contigo ❤️</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:#09040d;color:white;font-family:Georgia,serif}button,input{font:inherit}
+#app{position:fixed;inset:0;overflow:hidden;background:radial-gradient(circle at 50% 20%,#32102e,#09040d 65%)}
+.scene{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 1.1s}.scene.active{opacity:1;pointer-events:auto}
+#rain{position:absolute;inset:0;z-index:100;pointer-events:none;overflow:hidden}
+.rain{position:absolute;top:-10vh;left:var(--x);font-size:var(--s);opacity:var(--o);animation:fall var(--d) linear infinite;animation-delay:var(--delay)}
+@keyframes fall{to{transform:translate(var(--dx),120vh) rotate(360deg)}}
+
+/* FECHA */
+#date{display:grid;place-items:center;z-index:10}
+.card{width:min(88vw,520px);padding:25px;border-radius:28px;text-align:center;background:#180a1deF;border:1px solid #ffc1df55;box-shadow:0 25px 80px #000b;transition:1.5s cubic-bezier(.2,.9,.2,1)}
+.card.lift{transform:translateY(-115vh) scale(.8);opacity:0}
+.snoopy{display:block;width:min(70vw,300px);max-height:34vh;object-fit:contain;margin:auto}
+h1{font-size:clamp(25px,5vw,38px);margin:10px 0 18px}
+form{width:100%;display:flex;gap:9px;justify-content:center;align-items:center;flex-wrap:wrap;margin:0 auto}.date{width:min(290px,72vw);padding:13px;border-radius:14px;border:1px solid #ff9dc766;background:#fff1;color:#fff;text-align:center;outline:0}
+.btn{border:0;border-radius:14px;padding:13px 18px;color:#fff;background:linear-gradient(135deg,#c52e62,#76235b);cursor:pointer}
+.err{height:25px;color:#ff9fbd;font:14px Arial}.special{position:relative;left:50%;width:100%;display:block;text-align:center;margin:14px 0 0;padding:0 8px;opacity:0;transform:translate(-50%,10px);transition:1s;font-size:clamp(20px,4.5vw,30px);line-height:1.3;color:#ffd6e5}.special.show{opacity:1;transform:translate(-50%,0)}
+
+/* JARDÍN */
+#garden{background:linear-gradient(#120818,#201024 43%,#07160a);z-index:5}
+.camera{position:absolute;inset:0;transition:transform 4.5s cubic-bezier(.18,.75,.2,1)}
+.ground{position:absolute;left:-5%;right:-5%;bottom:-8%;height:53%;border-radius:50% 50% 0 0/15% 15% 0 0;background:radial-gradient(ellipse,#23652d,#0a2611 65%,#031009)}
+.moon{position:absolute;right:9%;top:8%;width:72px;height:72px;border-radius:50%;background:#ffe9d1;box-shadow:0 0 45px #ffe1c566}
+#flowers{position:absolute;inset:0;z-index:5}.flower{position:absolute;left:var(--x);bottom:var(--b);width:var(--w);height:var(--h);transform-origin:bottom;animation:sway var(--sw) ease-in-out infinite alternate;animation-delay:var(--dl);cursor:pointer;filter:drop-shadow(0 7px 7px #0005)}
+.flower:hover{filter:brightness(1.12) drop-shadow(0 9px 10px #0006)}@keyframes sway{to{transform:rotate(3deg) translateX(2px)}}
+.stem{position:absolute;bottom:0;left:50%;width:5px;height:79%;background:linear-gradient(90deg,#173f1d,#62a94e 45%,#245a2b);border-radius:8px;transform:translateX(-50%) rotate(var(--lean));transform-origin:bottom;box-shadow:1px 0 2px #071d09}
+.leaf{position:absolute;width:48%;height:13%;bottom:36%;left:47%;border-radius:100% 8% 100% 8%;background:linear-gradient(135deg,#77bb61,#2f7635 65%,#174a25);transform:rotate(-28deg);box-shadow:inset -2px -2px 3px #163d1b55}.leaf.two{left:4%;bottom:51%;transform:scaleX(-1) rotate(-25deg)}
+.head{position:absolute;left:50%;top:0;width:82%;height:31%;transform:translateX(-50%);filter:drop-shadow(0 4px 4px #0004)}
+.petal{position:absolute;left:50%;top:50%;width:43%;height:78%;border-radius:70% 35% 70% 35%;background:linear-gradient(145deg,#fff9,var(--c) 35%,color-mix(in srgb,var(--c),#6b1238 25%));transform:translateY(-50%) rotate(var(--angle));transform-origin:0 50%;box-shadow:inset -2px -3px 4px #0002;opacity:.97}
+.p1,.p2,.p3,.p4,.p5,.p6,.p7,.p8{transform:translateY(-50%) rotate(var(--angle))}
+.center{position:absolute;left:50%;top:50%;width:25%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#f9d96c,#9b5b19 60%,#4d2916);box-shadow:inset 0 0 0 2px #552712}
+.tulip .head{width:76%;height:31%;filter:none}.tulip .petal{height:92%;width:38%;border-radius:72% 72% 42% 42%;background:linear-gradient(160deg,#fff9,var(--c) 42%,#8d214b);box-shadow:inset -3px -4px 5px #7b163844}.tulip .center{display:none}
+.sunflower .head{width:98%;height:35%}.sunflower .petal{background:linear-gradient(90deg,#fff5,#ffd52c 45%,#d99408);width:25%;height:104%;border-radius:90% 15% 90% 15%;box-shadow:inset -2px -3px 3px #8a560355}.sunflower .center{width:34%;background:radial-gradient(circle,#3b1a0e 0 18%,#70401c 19% 28%,#35160d 29% 48%,#8a4d21 49% 58%,#34150d 59% 72%)}
+.carnation .head{width:90%;height:33%}.carnation .petal{width:30%;height:96%;border-radius:52% 48% 58% 42%;background:radial-gradient(circle at 50% 45%,#fff8,var(--c) 52%,#a62455);box-shadow:inset 0 0 5px #fff5;filter:saturate(1.08)}.carnation .center{width:18%;background:radial-gradient(circle,#ffe0a0,#b9782b 60%,#633314)}
+.rose .head{width:84%;height:34%}.rose .petal{width:40%;height:84%;border-radius:75% 28% 72% 30%;background:linear-gradient(145deg,#fff8,var(--c) 45%,#8f173d);box-shadow:inset -2px -3px 5px #0002}.rose .center{width:25%;background:radial-gradient(circle at 40% 35%,#ffd0d9,var(--c) 55%,#8c163a)}
+.rose .p2,.rose .p6{width:38%;height:72%}.rose .p3,.rose .p7{width:34%;height:60%}
+#mailboxWrap{position:absolute;left:50%;bottom:19%;transform:translate(-50%,70vh);transition:2.4s cubic-bezier(.2,.9,.2,1);z-index:9}.show{transform:translate(-50%,0)!important}
+.mailbox{width:190px;height:160px;position:relative;cursor:pointer;filter:drop-shadow(0 20px 18px #0008)}.body{position:absolute;left:10px;bottom:0;width:170px;height:112px;border-radius:15px;background:linear-gradient(145deg,#791628,#c0384c,#651222);border:3px solid #480b17}.roof{position:absolute;left:10px;top:0;width:170px;height:62px;border-radius:90px 90px 0 0;background:linear-gradient(135deg,#a32339,#df5966,#731625);border:3px solid #480b17;border-bottom:0}.slot{position:absolute;left:42px;top:55px;width:106px;height:18px;border-radius:10px;background:#280711}.flag{position:absolute;right:-3px;top:20px;width:10px;height:80px;background:#e7c478;border-radius:5px}.flag:after{content:"";position:absolute;top:0;right:-3px;width:40px;height:23px;background:#e7c478;border-radius:5px}.hint{position:absolute;top:165px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#190816dd;border:1px solid #ffc1dd66;padding:10px 17px;border-radius:20px;color:#ffd9e8;font:600 15px Arial;animation:float 1.8s infinite}@keyframes float{50%{transform:translate(-50%,-8px)}}
+.mailbox.open .roof{transform:rotateX(45deg) translateY(-8px);transform-origin:bottom;transition:.8s}
+
+/* CARTA */
+#roll,#open{z-index:20;background:radial-gradient(circle,#35132f,#0d050d 72%)}
+.roll{position:absolute;left:50%;top:50%;width:min(82vw,380px);transform:translate(-50%,-50%) scale(.1) rotate(-8deg);opacity:0;transition:1.2s cubic-bezier(.2,.9,.2,1);cursor:pointer}.roll.show{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+.paper{height:230px;border-radius:22px;background:linear-gradient(100deg,#dcbf8b,#fff1ca,#d4b578);border:4px solid #8c6639;box-shadow:0 25px 80px #000b;position:relative}.paper:before,.paper:after{content:"";position:absolute;left:5%;right:5%;height:28px;border-radius:50%;background:linear-gradient(#c3985e,#f5dca4,#b9874d)}.paper:before{top:-12px}.paper:after{bottom:-12px}
+.ribbon{position:absolute;left:50%;top:0;bottom:0;width:23px;transform:translateX(-50%);background:#c7243c}.knot{position:absolute;left:50%;top:50%;width:70px;height:42px;transform:translate(-50%,-50%);background:#d22a42;border-radius:50%;border:3px solid #8e1428}.rollhint{text-align:center;margin-top:18px;font:600 16px Arial;color:#ffe0ec}
+.spark{position:absolute;color:var(--c);left:var(--x);top:var(--y);font-size:var(--s);animation:spark 3s infinite ease-in-out;animation-delay:var(--d);filter:drop-shadow(0 0 10px currentColor)}@keyframes spark{0%,100%{opacity:.05;transform:scale(.3)}50%{opacity:.7;transform:scale(1.2)}}
+#open{overflow:auto}.letterWrap{min-height:100%;display:grid;place-items:center;padding:5vh 4vw}.letter{width:min(88vw,720px);max-height:88vh;overflow:auto;padding:55px 46px;background:linear-gradient(110deg,#f2dba8,#fff4d5,#e3c58d);color:#4b2c22;border-radius:8px;box-shadow:0 30px 100px #000b;transform:scaleX(.02);opacity:0;transform-origin:left}.letter.unroll{animation:unroll 2.8s forwards cubic-bezier(.2,.8,.2,1)}@keyframes unroll{to{transform:scaleX(1);opacity:1}}.letter h2{text-align:center;color:#92223f;font-size:clamp(24px,4vw,35px)}.text{font-size:clamp(15px,2vw,19px);line-height:1.72;white-space:pre-line}.glow{position:fixed;inset:0;pointer-events:none}.glow i{position:absolute;color:var(--c);left:var(--x);top:var(--y);font-size:var(--s);animation:spark 3s infinite}.next{position:fixed;right:5vw;bottom:5vh;width:120px;height:120px;border:0;background:transparent;opacity:0;pointer-events:none;transition:1s;cursor:pointer}.next.show{opacity:1;pointer-events:auto}.carnationBtn{width:70px;height:50px;position:absolute;left:25px;top:20px;border-radius:50%;background:#ffd521;box-shadow:0 0 0 8px #f2bd18,0 0 0 15px #ffe56b,0 0 30px #ffd21f}.next span{position:absolute;top:93px;left:50%;transform:translateX(-50%);white-space:nowrap;color:#ffe6a4;font:bold 16px Arial}
+
+/* FINAL */
+#final{z-index:40;display:grid;place-items:center;background:radial-gradient(circle,#3d0a29,#11030d 72%)}
+.finalHeart{width:min(82vw,500px);height:min(82vw,500px);position:relative;cursor:pointer;animation:beat 1.35s infinite;display:grid;place-items:center;filter:drop-shadow(0 0 35px #ff2c6b66)}.heartEmoji{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:min(72vw,390px);line-height:1;filter:drop-shadow(0 16px 25px #5b092a88);user-select:none;transition:transform .45s cubic-bezier(.2,.9,.2,1)}.finalText{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:72%;text-align:center;font:900 clamp(17px,4.1vw,30px)/1.2 Arial;text-shadow:0 3px 12px #5b092a}.grow .heartEmoji{transform:scale(1.28)}@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.06)}30%{transform:scale(1)}45%{transform:scale(1.04)}60%{transform:scale(1)}}15%{transform:scale(1.06)}30%{transform:scale(1)}45%{transform:scale(1.04)}60%{transform:scale(1)}}
+@media(max-width:600px){.snoopy{max-height:29vh}.mailbox{transform:scale(.82);transform-origin:center bottom}.letter{padding:45px 24px}.ground{height:48%}}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="rain"></div>
+
+<section id="date" class="scene active">
+<div class="card" id="card">
+<img class="snoopy" src="snoopy.png" alt="Snoopy con un corazón">
+<h1>¿Qué día es hoy?</h1>
+<form id="form"><input id="dateInput" class="date" placeholder="Escribe la fecha..." autocomplete="off"><button class="btn">Comprobar ❤️</button></form>
+<div class="err" id="err"></div><div class="special" id="special">hoy es un día muy especial, porque hoy celebramos....</div>
+</div></section>
+
+<section id="garden" class="scene"><div class="camera">
+<div class="moon"></div><div class="ground"></div><div id="flowers"></div>
+<div id="mailboxWrap"><div class="mailbox" id="mailbox"><div class="roof"></div><div class="body"></div><div class="slot"></div><div class="flag"></div><div class="hint">haz clic aquí...</div></div></div>
+</div></section>
+
+<section id="roll" class="scene"><div id="rollSparks"></div><div class="roll" id="rollCard"><div class="paper"><div class="ribbon"></div><div class="knot"></div></div><div class="rollhint">toca la carta para abrirla 💌</div></div></section>
+
+<section id="open" class="scene"><div class="glow" id="glow"></div><div class="letterWrap"><article class="letter" id="letter">
+<h2>Para mi niña hermosa ❤️</h2>
+<div class="text">Mi vida linda, mi niña amada:
+
+Hoy celebramos siete mesesitooosh juntitosh, y no puedo evitar sentirme agradecido por cada instante que hemos compartido, cada sonrisa, cada momento divertido, cada abrazo, cada beso. El tiempo pasa tan rápido cuando estoy contigo, y mi amor por ti no deja de crecer día con día a ritmo constante.
+
+Mi niña, gracias por hacer de mi vida un lugar más bonito. Gracias por confiar en mí, por acompañarme, por hacerme reír y por quererme como lo haces. Eres alguien muy especial, y cada día me siento más afortunado de tenerte a mi lado en esta etapa tan bonitaa.
+
+Quiero que sepas que, sin importar lo que venga, siempre voy a esforzarme por hacerte feliz, por apoyarte y por demostrarte que eres una parte muy importante de mi vida.
+
+Amor, espero que dentro de muchos meses más podamos leer estas cartas y sonreír al recordar todo lo que hemos construido juntos. Porque si algo tengo claro, es que quiero seguir creando recuerdos contigo, y que esos recuerdos los podamos construir juntosh, conseguir nuestras metas y todo lo que soñamosh.
+
+Felices siete meses, corazón. Gracias por ser tú y solamente tú. Te amo muchísimo mi pincesita hemoshaaa 😘❤️</div>
+</article></div><button class="next" id="next"><i class="carnationBtn"></i><span>siguiente...</span></button></section>
+
+<section id="final" class="scene"><div class="finalHeart" id="finalHeart"><div class="heartEmoji">❤️</div><div class="finalText">FELIIIZ SÉPTIMO MESESARIOOO MI AMOOR,<br>TE AMITOOOOO DEMASIADO MI NIÑA HERMOSA 😘</div></div></section>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const sceneNames=["date","garden","roll","open","final"];
+function show(n){sceneNames.forEach(x=>$("#"+x).classList.toggle("active",x===n))}
+
+/* lluvia infinita */
+const rain=$("#rain"),chars=["♥","❤","♡","💗","💖"];
+for(let i=0;i<90;i++){let e=document.createElement("span");e.className="rain";e.textContent=chars[Math.random()*chars.length|0];e.style.cssText=`--x:${Math.random()*100}%;--s:${10+Math.random()*25}px;--o:${.12+Math.random()*.4};--d:${6+Math.random()*11}s;--delay:${-Math.random()*16}s;--dx:${Math.random()*100-50}px`;rain.appendChild(e)}
+
+/* fecha */
+$("#form").onsubmit=e=>{e.preventDefault();let v=$("#dateInput").value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ");if(!/^(13 de octubre|13 octubre|13\/10|13-10|13 10)$/.test(v)){$("#err").textContent="Escribe 13 de octubre ❤️";return}$("#err").textContent="";$("#special").classList.add("show");setTimeout(()=>{$("#card").classList.add("lift");setTimeout(startGarden,900)},2600)}
+
+/* flores */
+const types=["rose","tulip","carnation","sunflower"],colors={rose:["#e72c55","#ff6684","#c91e4a","#f49bb5"],tulip:["#ef4a72","#f28c2e","#ffd447","#a944d6"],carnation:["#f25d79","#ff8fa3","#fff0ef","#d948a8"],sunflower:["#f5bd20","#ffd84b"]};
+for(let i=0;i<64;i++){
+  let t=types[i%4],f=document.createElement("div");
+  const counts={rose:10,tulip:6,carnation:14,sunflower:18};
+  const n=counts[t];
+  let petals="";
+  for(let j=0;j<n;j++){
+    let angle=(360/n)*j + (Math.random()*5-2.5);
+    petals+=`<i class="petal p${(j%8)+1}" style="--angle:${angle}deg"></i>`;
+  }
+  f.className="flower "+t;
+  f.style.cssText=`--x:${2+Math.random()*96}%;--b:${7+Math.random()*34}%;--w:${34+Math.random()*55}px;--h:${100+Math.random()*175}px;--lean:${Math.random()*12-6}deg;--sw:${2.7+Math.random()*2.5}s;--dl:${-Math.random()*3}s;--c:${colors[t][Math.random()*colors[t].length|0]}`;
+  f.innerHTML='<div class="stem"></div><div class="leaf"></div><div class="leaf two"></div><div class="head">'+petals+'<i class="center"></i></div>';
+  $("#flowers").appendChild(f)
+}
+
+function startGarden(){show("garden");setTimeout(()=>$("#mailboxWrap").classList.add("show"),700);let fs=[...document.querySelectorAll(".flower")];function react(x,y){fs.forEach(f=>{let r=f.getBoundingClientRect(),dx=x-(r.left+r.width/2),dy=y-(r.top+r.height/2),d=Math.hypot(dx,dy);if(d<190){let q=1-d/190;f.style.transform=`rotate(${Math.max(-7,Math.min(7,dx*.02*q))}deg) translateX(${dx*.03*q}px)`;clearTimeout(f._t);f._t=setTimeout(()=>f.style.transform="",450)}})}$("#garden").onmousemove=e=>react(e.clientX,e.clientY);$("#garden").ontouchmove=e=>{let t=e.touches[0];if(t)react(t.clientX,t.clientY)};window.addEventListener("devicemotion",e=>{let a=e.accelerationIncludingGravity;if(a&&(Math.abs(a.x||0)+Math.abs(a.y||0)+Math.abs(a.z||0)>28))fs.forEach((f,i)=>{f.style.transform=`rotate(${(i%2?-1:1)*(3+Math.random()*5)}deg)`;setTimeout(()=>f.style.transform="",600)})},{passive:true})}
+
+/* buzón */
+$("#mailbox").onclick=()=>{$("#mailbox").classList.add("open");setTimeout(()=>{show("roll");for(let i=0;i<50;i++){let s=document.createElement("i");s.className="spark";s.textContent="♥";s.style.cssText=`--x:${Math.random()*100}%;--y:${Math.random()*100}%;--s:${8+Math.random()*25}px;--c:${["#ff315f","#ff77b7","#bd58ff"][i%3]};--d:${-Math.random()*4}s`;$("#rollSparks").appendChild(s)}setTimeout(()=>$("#rollCard").classList.add("show"),300)},850)}
+
+/* abrir carta y temporizador de 2 minutos */
+$("#rollCard").onclick=()=>{show("open");for(let i=0;i<60;i++){let s=document.createElement("i");s.textContent="♥";s.style.cssText=`--x:${Math.random()*100}%;--y:${Math.random()*100}%;--s:${9+Math.random()*25}px;--c:${["#ff315f","#ff77b7","#a84cff"][i%3]};--d:${-Math.random()*3}s`;$("#glow").appendChild(s)}requestAnimationFrame(()=>$("#letter").classList.add("unroll"));setTimeout(()=>$("#next").classList.add("show"),120000)}
+
+$("#next").onclick=()=>show("final");
+$("#finalHeart").onclick=()=>{$("#finalHeart").classList.toggle("grow");for(let i=0;i<25;i++){let h=document.createElement("b");h.textContent=["♥","❤","💗"][i%3];h.style.cssText=`position:absolute;left:50%;top:50%;z-index:5;color:${["#ff496f","#ff8ac0","#c46cff"][i%3]};font-size:${12+Math.random()*24}px;pointer-events:none`;$("#final").appendChild(h);let a=Math.random()*6.28,d=100+Math.random()*250;h.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:0},{transform:"translate(-50%,-50%) scale(1)",opacity:1,offset:.2},{transform:`translate(calc(-50% + ${Math.cos(a)*d}px),calc(-50% + ${Math.sin(a)*d}px))`,opacity:0}],{duration:1300,easing:"cubic-bezier(.2,.8,.2,1)"}).finished.then(()=>h.remove())}}
+</script>
+</body>
+</html>
